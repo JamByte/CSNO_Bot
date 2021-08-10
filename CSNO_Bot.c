@@ -38,6 +38,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     if(msg->content == 0) {return;}
     if(msg->content[0] == '\0') {return;}
     if(strstr(msg->content,"https://") == 0){return;}
+    sendembed(client, bot,msg,"I see you sending a link");
     authors[index] = msg->author->id;
     channels[index] = msg->channel_id;
     if(index >49){

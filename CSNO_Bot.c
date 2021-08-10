@@ -34,6 +34,7 @@ void on_builder_init(
 
 int main(int argc, char *argv[])
 {
+  time_t t;
   srand((unsigned) time(&t));
   const char *config_file;
   if (argc > 1)

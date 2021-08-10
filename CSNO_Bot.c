@@ -38,15 +38,16 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     if(msg->content == 0) {return;}
     if(msg->content[0] == '\0') {return;}
     if(strstr(msg,"https://") == 0){return;}
-    authors[index] = msg->author.id;
+    authors[index] = msg->author->id;
     channels[index] = msg->channel_id;
     if(index >49){
         index =0;
     }
+    int i=0;
     long long unsigned int channel1=0;
     long long unsigned int channel2=0;
     for(i=0; i<50; i++){
-        if(authors[i] == msg->author.id){
+        if(authors[i] == msg->author->id){
             if(channel1 == 0 || channel1 == channels[i] ){
                 channel1 = channels[i];
                 continue;
@@ -58,7 +59,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
             else
             {
                 //ban them !!!
-                sendembed(client, bot,msg,"Pow you would of been banned")
+                sendembed(client, bot,msg,"Pow you would of been banned");
             }
         }
     }

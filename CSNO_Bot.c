@@ -23,7 +23,7 @@ void on_builder_init(
   struct discord_embed embed={0};
   //discord_embed_set_title(&embed, "%s", "CSNO");
   snprintf(embed.description, sizeof(embed.description), "Yo its me guys from my raspberry pi in **C** with a random colour");
-  embed.color =(0<<24)|((rand()&0xff))<<16)|((rand()&0xff))<<8)|((rand()&0xff));
+  embed.color = (0<<24)|(((rand()&0xff))<<16)|(((rand()&0xff))<<8)|((rand()&0xff));
   
 
   struct discord_create_message_params params = { .embed = &embed };

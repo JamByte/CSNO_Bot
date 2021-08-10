@@ -55,7 +55,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                 continue;
             }
             else if(channel2 == 0|| channel2== channels[i]){
-                channel1 = channels[i];
+                channel2 = channels[i];
                 continue;
             }
             else

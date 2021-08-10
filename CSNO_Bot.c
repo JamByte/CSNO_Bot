@@ -21,41 +21,10 @@ void on_builder_init(
   if (msg->author->bot) return;
 
   struct discord_embed embed={0};
-  discord_embed_set_title(&embed, "%s", "Orca");
-  snprintf(embed.description, sizeof(embed.description), "Multi-REST Api library");
-  embed.url = strdup("https://github.com/cee-studio/orca");
-  embed.color = 3447003;
-  discord_embed_set_footer(
-    &embed, 
-    "github.com/cee-studio/orca",
-    "https://raw.githubusercontent.com/cee-studio/orca-docs/master/docs/source/images/icon.svg",
-    NULL);
-  discord_embed_set_image(
-    &embed, 
-    "https://github.com/cee-studio/orca-docs/blob/master/docs/source/images/social-preview.png?raw=true",
-    NULL, 
-    0, 0);
-  discord_embed_set_author(
-    &embed, 
-    "cee-studio",
-    "https://github.com/cee-studio",
-    "https://cee.dev/static/images/cee.png",
-    NULL);
-  discord_embed_add_field(
-    &embed,
-    "Want to learn more?",
-    "Read our [documentation](https://cee-studio.github.io/orca/discord_api.html#c.discord_embed)!",
-    false);
-  discord_embed_add_field(
-    &embed,
-    "Need help troubleshooting?",
-    "Debug with [Saiph-C](https://www.cee.studio/)",
-    false);
-  discord_embed_add_field(
-    &embed,
-    "Looking for support?",
-    "Join our server [here](https://discord.gg/x4hhGQYu)!",
-    false);
+  //discord_embed_set_title(&embed, "%s", "CSNO");
+  snprintf(embed.description, sizeof(embed.description), "Yo its me guys from my raspberry pi in **C** with a random colour");
+  embed.color =(0<<24)|((rand()&0xff))<<16)|((rand()&0xff))<<8)|((rand()&0xff));
+  
 
   struct discord_create_message_params params = { .embed = &embed };
   discord_create_message(client, msg->channel_id, &params, NULL);

@@ -6,8 +6,8 @@
 #include "discord.h"
 #include "cee-utils.h" /* cee_timestamp_ms() */
 
-unsigned long long authors[];
-unsigned long long channels[];
+unsigned long long* authors;
+unsigned long long* channels;
 int index;
 #define CHARSTOCOPY 50;
 

@@ -30,7 +30,7 @@ void sendembed(struct discord *client, const struct discord_user *bot, const str
 void on_message(struct discord *client, const struct discord_user *bot, const struct discord_message *msg) {
   if (0 == strcmp(msg->content, "|ping")) {
     char str[512];
-    snprintf(str, sizeof str,"Pong <@%d>", bot->id);
+    snprintf(str, sizeof str,"Pong <@%d>", msg->author->id);
     sendembed(client,bot,msg, str);
   }
 }

@@ -35,11 +35,11 @@ void sendembed(struct discord *client, const struct discord_user *bot, const str
 }
 void on_message(struct discord *client, const struct discord_user *bot, const struct discord_message *msg) {
    
-    if(msg.content == 0) {return;}
-    if(msg->content == '\0') {return;}
+    if(msg->content == 0) {return;}
+    if(msg->content[0] == '\0') {return;}
     if(strstr(msg,"https://") == 0){return;}
     authors[index] = msg->author.id;
-    channels[index = msg.channel_id;
+    channels[index] = msg->channel_id;
     if(index >49){
         index =0;
     }

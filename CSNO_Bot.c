@@ -6,8 +6,8 @@
 #include "discord.h"
 #include "cee-utils.h" /* cee_timestamp_ms() */
 
-long long unsigned int authors[];
-long long unsigned int channels[];
+unsigned long long authors[];
+unsigned long long channels[];
 int index;
 #define CHARSTOCOPY 50;
 
@@ -37,15 +37,15 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
    
     if(msg->content == 0) {return;}
     if(msg->content[0] == '\0') {return;}
-    if(strstr(msg,"https://") == 0){return;}
+    if(strstr(msg->content,"https://") == 0){return;}
     authors[index] = msg->author->id;
     channels[index] = msg->channel_id;
     if(index >49){
         index =0;
     }
     int i=0;
-    long long unsigned int channel1=0;
-    long long unsigned int channel2=0;
+    unsigned long long channel1=0;
+    unsigned long long channel2=0;
     for(i=0; i<50; i++){
         if(authors[i] == msg->author->id){
             if(channel1 == 0 || channel1 == channels[i] ){
@@ -68,10 +68,10 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 int main(int argc, char *argv[])
 {
  
-    authors = malloc(50*sizeof(long long unsigned int));
+    authors = malloc(50*sizeof(unsigned long long));
 
     
-    channels = malloc(50*sizeof(long long unsigned int));
+    channels = malloc(50*sizeof(unsigned long long));
 
 
     index=0;

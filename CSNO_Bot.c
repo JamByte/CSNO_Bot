@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-
+#include <time.h>
 #include "discord.h"
 #include "cee-utils.h" /* cee_timestamp_ms() */
 
@@ -34,6 +34,7 @@ void on_builder_init(
 
 int main(int argc, char *argv[])
 {
+  srand((unsigned) time(&t));
   const char *config_file;
   if (argc > 1)
     config_file = argv[1];

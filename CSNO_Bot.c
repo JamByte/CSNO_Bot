@@ -13,7 +13,7 @@ void on_ready(struct discord *client, const struct discord_user *bot) {
 
 
 
-void sendembed(struct discord *client, const struct discord_user *bot, const struct discord_message *msg, char[] content)
+void sendembed(struct discord *client, const struct discord_user *bot, const struct discord_message *msg, char* content)
 {
 
   struct discord_embed embed={0};

@@ -68,10 +68,10 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 int main(int argc, char *argv[])
 {
  
-    authors = malloc(50*sizeof(long long unsigned int)):
+    authors = malloc(50*sizeof(long long unsigned int));
 
     
-    channels = malloc(50*sizeof(long long unsigned int)):
+    channels = malloc(50*sizeof(long long unsigned int));
 
 
     index=0;

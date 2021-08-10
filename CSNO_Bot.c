@@ -7,18 +7,14 @@
 #include "cee-utils.h" /* cee_timestamp_ms() */
 
 void on_ready(struct discord *client, const struct discord_user *bot) {
-  log_info("Embed-Bot succesfully connected to Discord as %s#%s!",
+  log_info("CSNO_Bot succesfully connected to Discord as %s#%s!",
       bot->username, bot->discriminator);
 }
 
 
 
-void on_builder_init(
-  struct discord *client, 
-  const struct discord_user *bot, 
-  const struct discord_message *msg)
+void sendembed(struct discord *client, const struct discord_user *bot, const struct discord_message *msg, char[] content)
 {
-  if (msg->author->bot) return;
 
   struct discord_embed embed={0};
   //discord_embed_set_title(&embed, "%s", "CSNO");
@@ -31,7 +27,13 @@ void on_builder_init(
 
   discord_embed_cleanup(&embed);
 }
-
+void on_message(struct discord *client, const struct discord_user *bot, const struct discord_message *msg) {
+  if (0 == strcmp(msg->content, "|ping")) {
+    char str[512];
+    snprintf(str, sizeof str,"Pong <@%d>", bot->id);
+    sendembed(client,bot,msg, str);
+  }
+}
 int main(int argc, char *argv[])
 {
   time_t t;
@@ -47,20 +49,7 @@ int main(int argc, char *argv[])
   assert(NULL != client && "Couldn't initialize client");
 
   discord_set_on_ready(client, &on_ready);
-
-  discord_set_prefix(client, "!");
-  discord_set_on_command(client, "embedtest", &on_builder_init);
-
-  printf("\n\nThis bot demonstrates how to embeds"
-         " with three different methods.\n"
-         "1 - From JSON init (type !from_json_init): This is the easiest method by far, you can use it"
-         " with a JSON library of your preference.\n"
-         "2 - Designated init (type !designated_init): This is a 'clean' initialization approach"
-         " but is not very flexible.\n"
-         "3 - Builder init (type !builder_init): This is a very flexible approach, it relies on utility functions from discord-misc.c.\n"
-         "\nTYPE ANY KEY TO START BOT\n");
-  fgetc(stdin); // wait for input
-
+  discord_set_on_message_create(client, &on_message);
   discord_run(client);
 
   discord_cleanup(client);

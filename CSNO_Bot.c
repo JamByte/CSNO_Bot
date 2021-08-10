@@ -5,7 +5,7 @@
 #include <time.h>
 #include "discord.h"
 #include "cee-utils.h" /* cee_timestamp_ms() */
-
+#include <unistd.h>
 unsigned long long* authors;
 unsigned long long* channels;
 int index;
@@ -38,7 +38,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     if(msg->content == 0) {return;}
     if(msg->content[0] == '\0') {return;}
     if(strstr(msg->content,"https://") == 0){return;}
-    sendembed(client, bot,msg,"I see you sending a link");
+    //sendembed(client, bot,msg,"I see you sending a link");
     authors[index] = msg->author->id;
     channels[index] = msg->channel_id;
     index++;
@@ -61,7 +61,9 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
             else
             {
                 //ban them !!!
-                sendembed(client, bot,msg,"Pow you would of been banned");
+                discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Rule 9: sent too many links");
+                sleep(1000);
+                discord_remove_guild_ban(client, msg->guild_id, msg->author->id, 1, "Rule 9: sent too many links");
             }
         }
     }

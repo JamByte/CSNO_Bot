@@ -41,6 +41,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     sendembed(client, bot,msg,"I see you sending a link");
     authors[index] = msg->author->id;
     channels[index] = msg->channel_id;
+    index++;
     if(index >49){
         index =0;
     }

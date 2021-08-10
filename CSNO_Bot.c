@@ -18,7 +18,7 @@ void sendembed(struct discord *client, const struct discord_user *bot, const str
 
   struct discord_embed embed={0};
   //discord_embed_set_title(&embed, "%s", "CSNO");
-  snprintf(embed.description, sizeof(embed.description), "Yo its me guys from my raspberry pi in **C** with a random colour");
+  snprintf(embed.description, sizeof(embed.description), content);
   embed.color = (0<<24)|(((rand()&0xff))<<16)|(((rand()&0xff))<<8)|((rand()&0xff));
   
 

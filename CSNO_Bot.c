@@ -62,8 +62,8 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
             {
                 //ban them !!!
                 discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Rule 9: sent too many links");
-                sleep(1000);
-                discord_remove_guild_ban(client, msg->guild_id, msg->author->id, 1, "Rule 9: sent too many links");
+                sleep(1);
+                discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Rule 9: sent too many links");
             } 
         }
     }

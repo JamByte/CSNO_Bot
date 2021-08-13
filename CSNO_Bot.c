@@ -24,6 +24,7 @@ void on_ready(struct discord *client, const struct discord_user *bot) {
 		printf("\n%d. %s", i+1, guilds[i]->name);
 		++i;
 	  }
+	  fflush( stdout );
 }
 
 
@@ -84,7 +85,6 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 }
 int main(int argc, char *argv[])
 {
-  setlinebuf(stdout);
 
 
     index=0;

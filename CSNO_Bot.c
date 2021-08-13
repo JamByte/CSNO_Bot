@@ -73,7 +73,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 	for(int i = 0; msg->content[i]; i++){
 	  msg->content[i] = tolower(msg->content[i]);
 	}
-    if(strstr(msg->content,"https://") == 0 && strstr(msg->content,"http://") == 0 && strstr(msg->content,"nitro") == 0)){return;}
+    if(strstr(msg->content,"https://") == 0 && strstr(msg->content,"http://") == 0 && strstr(msg->content,"nitro") == 0){return;}
     //sendembed(client, bot,msg,"I see you sending a link");
     authors[guildindex][index[guildindex]] = msg->author->id;
     channels[guildindex][index[guildindex]] = msg->channel_id;

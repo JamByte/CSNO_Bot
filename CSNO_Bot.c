@@ -9,7 +9,10 @@
 #include <unistd.h>
 unsigned long long** authors;
 unsigned long long** channels;
-int index;
+unsigned long long* servers;
+int serverslength;
+
+int* index;
 #define CHARSTOCOPY 50;
 
 
@@ -25,6 +28,18 @@ void on_ready(struct discord *client, const struct discord_user *bot) {
 		++i;
 	  }
 	  fflush( stdout );
+	authors = malloc(i*unsigned long long*);
+	channels = malloc(i*unsigned long long*);
+	servers = malloc(i*unsigned long long);
+	index =malloc(i*int);
+	serverslength=i;
+	int j =0;
+	for(j=0;j<i;j++){
+		servers[j] = guilds[j]->id;
+		authors[j] = malloc(25*unsigned long long);
+		
+		channels[j] = malloc(25*unsigned long long);
+	}
 }
 
 
@@ -47,6 +62,13 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
    
     if(msg->content == 0) {return;}
     if(msg->content[0] == '\0') {return;}
+	
+	int guildindex =0;
+	
+	for(guildindex=0; guildindex<serverslength; guildindex++;){
+		if(servers[guildindex] == msg->guild_id){
+			break;
+	}
 	
 	for(int i = 0; msg->content[i]; i++){
 	  msg->content[i] = tolower(msg->content[i]);

@@ -28,17 +28,17 @@ void on_ready(struct discord *client, const struct discord_user *bot) {
 		++i;
 	  }
 	  fflush( stdout );
-	authors = malloc(i*unsigned long long*);
-	channels = malloc(i*unsigned long long*);
-	servers = malloc(i*unsigned long long);
-	index =malloc(i*int);
+	authors = malloc(i*sizeof(unsigned long long*));
+	channels = malloc(i*sizeof(unsigned long long*));
+	servers = malloc(i*sizeof(unsigned long long));
+	index =malloc(i*sizeof(int));
 	serverslength=i;
 	int j =0;
 	for(j=0;j<i;j++){
 		servers[j] = guilds[j]->id;
-		authors[j] = malloc(25*unsigned long long);
+		authors[j] = malloc(25*sizeof(unsigned long long));
 		
-		channels[j] = malloc(25*unsigned long long);
+		channels[j] = malloc(25*sizeof(unsigned long long));
 	}
 }
 

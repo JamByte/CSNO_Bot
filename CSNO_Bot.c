@@ -85,7 +85,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     unsigned long long channel1=0;
     unsigned long long channel2=0;
     for(i=0; i<25; i++){
-        if(authors[guildindex][guildindex][i] == msg->author->id){
+        if(authors[guildindex][i] == msg->author->id){
             if(channel1 == 0 || channel1 == channels[guildindex][i] ){
                 channel1 = channels[guildindex][i];
                 continue;

@@ -65,7 +65,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 	
 	int guildindex =0;
 	
-	for(guildindex=0; guildindex<serverslength; guildindex++;){
+	for(guildindex=0; guildindex<serverslength; guildindex++){
 		if(servers[guildindex] == msg->guild_id){
 		break;}
 	}

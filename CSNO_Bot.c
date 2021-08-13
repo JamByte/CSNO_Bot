@@ -85,13 +85,13 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     unsigned long long channel1=0;
     unsigned long long channel2=0;
     for(i=0; i<25; i++){
-        if(authors[i] == msg->author->id){
-            if(channel1 == 0 || channel1 == channels[i] ){
-                channel1 = channels[i];
+        if(authors[guildindex][guildindex][i] == msg->author->id){
+            if(channel1 == 0 || channel1 == channels[guildindex][i] ){
+                channel1 = channels[guildindex][i];
                 continue;
             }
-            else if(channel2 == 0|| channel2== channels[i]){
-                channel2 = channels[i];
+            else if(channel2 == 0|| channel2== channels[guildindex][i]){
+                channel2 = channels[guildindex][i];
                 continue;
             }
             else

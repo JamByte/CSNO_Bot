@@ -7,8 +7,8 @@
 #include <ctype.h>
 #include "cee-utils.h" /* cee_timestamp_ms() */
 #include <unistd.h>
-unsigned long long authors[][];
-unsigned long long channels[][];
+unsigned long long** authors;
+unsigned long long** channels;
 int index;
 #define CHARSTOCOPY 50;
 
@@ -47,8 +47,8 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     if(msg->content == 0) {return;}
     if(msg->content[0] == '\0') {return;}
 	
-	for(int i = 0; str[i]; i++){
-	  str[i] = tolower(str[i]);
+	for(int i = 0; msg->content[i]; i++){
+	  msg->content[i] = tolower(msg->content[i]);
 	}
     if(strstr(msg->content,"https://") == 0 ||strstr(msg->content,"http://") == 0 || strstr(msg->content,"nitro") == 0){return;}
     //sendembed(client, bot,msg,"I see you sending a link");

@@ -4,10 +4,11 @@
 #include <assert.h>
 #include <time.h>
 #include "discord.h"
+#include <ctype.h>
 #include "cee-utils.h" /* cee_timestamp_ms() */
 #include <unistd.h>
-unsigned long long* authors;
-unsigned long long* channels;
+unsigned long long authors[][];
+unsigned long long channels[][];
 int index;
 #define CHARSTOCOPY 50;
 
@@ -15,6 +16,14 @@ int index;
 void on_ready(struct discord *client, const struct discord_user *bot) {
   log_info("CSNO_Bot succesfully connected to Discord as %s#%s!",
       bot->username, bot->discriminator);
+	
+	NTL_T(struct discord_guild) guilds = NULL;
+	discord_get_current_user_guilds(client, &guilds);
+	int i=0;
+	  while (guilds[i]) {
+		printf("\n%d. %s", i+1, guilds[i]->name);
+		++i;
+	  }
 }
 
 
@@ -37,18 +46,22 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
    
     if(msg->content == 0) {return;}
     if(msg->content[0] == '\0') {return;}
-    if(strstr(msg->content,"https://") == 0){return;}
+	
+	for(int i = 0; str[i]; i++){
+	  str[i] = tolower(str[i]);
+	}
+    if(strstr(msg->content,"https://") == 0 ||strstr(msg->content,"http://") == 0 || strstr(msg->content,"nitro") == 0){return;}
     //sendembed(client, bot,msg,"I see you sending a link");
     authors[index] = msg->author->id;
     channels[index] = msg->channel_id;
     index++;
-    if(index >49){
+    if(index >24){
         index =0;
     }
     int i=0;
     unsigned long long channel1=0;
     unsigned long long channel2=0;
-    for(i=0; i<50; i++){
+    for(i=0; i<25; i++){
         if(authors[i] == msg->author->id){
             if(channel1 == 0 || channel1 == channels[i] ){
                 channel1 = channels[i];
@@ -71,11 +84,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 }
 int main(int argc, char *argv[])
 {
- 
-    authors = malloc(50*sizeof(unsigned long long));
-
-    
-    channels = malloc(50*sizeof(unsigned long long));
+  setlinebuf(stdout);
 
 
     index=0;

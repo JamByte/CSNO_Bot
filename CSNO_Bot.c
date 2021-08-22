@@ -99,6 +99,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
             else
             {
 				//send dm
+				u64_snowflake_t dm_channel_id;
 				struct discord_channel dm_channel;
 				discord_channel_init(&dm_channel);
 				char* buffer = malloc(256);

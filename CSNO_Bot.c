@@ -106,7 +106,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                 discord_channel_init(&dm_channel);
                 printf("2");
 	              fflush( stdout );
-                char* buffer = malloc(512));
+                char* buffer = malloc(512);
                 printf("3");
 	              fflush( stdout );
                 discord_create_dm(client, msg->author->id, &dm_channel);

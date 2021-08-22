@@ -107,8 +107,8 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 				dm_channel_id = dm_channel.id;
 
 				discord_channel_cleanup(&dm_channel);
-				sprintf("You were softbanned in %s because your account was used to perpetuate a scam. If you did not do this, then your account has been compromised. It is advised that you change your Discord password and enable two-factor authentication on your account, and make sure to avoid suspicious links such as those that claim to offer free Nitro or CS:GO skins.\nYou can still rejoin the server, but please refrain from doing so until you have taken these measures", guilds[guildindex]->name);
-				struct discord_create_message_params params = { .content = msg };
+				sprintf(buffer, "You were softbanned in %s because your account was used to perpetuate a scam. If you did not do this, then your account has been compromised. It is advised that you change your Discord password and enable two-factor authentication on your account, and make sure to avoid suspicious links such as those that claim to offer free Nitro or CS:GO skins.\nYou can still rejoin the server, but please refrain from doing so until you have taken these measures", guilds[guildindex]->name);
+				struct discord_create_message_params params = { .content = buffer };
 				discord_create_message(client, dm_channel_id, &params, NULL);
 				
 				

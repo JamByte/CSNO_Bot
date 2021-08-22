@@ -106,7 +106,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                 discord_channel_init(&dm_channel);
                 printf("2");
 	              fflush( stdout );
-                char* buffer = malloc(256);
+                char* buffer = malloc(512));
                 printf("3");
 	              fflush( stdout );
                 discord_create_dm(client, msg->author->id, &dm_channel);
@@ -125,7 +125,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                 printf("7");
 	              fflush( stdout );
                 free(buffer);
-    
+
 				
                 //ban them !!!
                 discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");

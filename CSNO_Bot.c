@@ -77,10 +77,6 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 	}
     if(strstr(msg->content,"https://") == 0 && strstr(msg->content,"http://") == 0 && strstr(msg->content,"nitro") == 0){return;}
     //sendembed(client, bot,msg,"I see you sending a link");
-    
-    printf("%s", msg->content);
-    printf("%lld", msg->author->id);
-    fflush( stdout );
     authors[guildindex][index[guildindex]] = msg->author->id;
     channels[guildindex][index[guildindex]] = msg->channel_id;
     index[guildindex]++;
@@ -103,27 +99,14 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
             else
             {
                 //send dm
-                printf("1");
-	              fflush( stdout );
                 u64_snowflake_t dm_channel_id;
                 struct discord_channel dm_channel;
                 discord_channel_init(&dm_channel);
-                printf("2");
-	              fflush( stdout );
                 char* buffer = malloc(512);
-                printf("3");
-	              fflush( stdout );
                 discord_create_dm(client, msg->author->id, &dm_channel);
-                printf("4");
-	              fflush( stdout );
                 dm_channel_id = dm_channel.id;
-                
                 discord_channel_cleanup(&dm_channel);
-                printf("5");
-	              fflush( stdout );
                 sprintf(buffer, "You were softbanned in %s because your account was used to perpetuate a scam. If you did not do this, then your account has been compromised. It is advised that you change your Discord password and enable two-factor authentication on your account, and make sure to avoid suspicious links such as those that claim to offer free Nitro or CS:GO skins.\nYou can still rejoin the server, but please refrain from doing so until you have taken these measures", guilds[guildindex]->name);
-                printf("6");
-	              fflush( stdout );
                 struct discord_create_message_params params = { .content = buffer };
                 discord_create_message(client, dm_channel_id, &params, NULL);
                 printf("7");

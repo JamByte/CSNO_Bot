@@ -107,16 +107,19 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     unsigned long long channel2=0;
     if(dontcomparebutstore==0){
       for(i=0; i<25; i++){
-       
+        if(messagestore[guildindex][index[guildindex]][0] == '\0')
+        {
+          continue;
+        }
           if(authors[guildindex][i] == msg->author->id){
               if(channel1 == 0 ||(channel1 == channels[guildindex][i] && strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0 )){
                   channel1 = channels[guildindex][i];
-                  sendembed(client, bot, msg,"1");
+                  //sendembed(client, bot, msg,"1");
                   continue;
               }
               else if(channel2 == 0||( channel2== channels[guildindex][i] && strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)){
                   channel2 = channels[guildindex][i];
-                  sendembed(client, bot, msg,"2");
+                  //sendembed(client, bot, msg,"2");
                   continue;
               }
               else if(channel2!=0&&strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)

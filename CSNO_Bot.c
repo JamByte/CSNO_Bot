@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include "cee-utils.h" /* cee_timestamp_ms() */
 #include <unistd.h>
+
 unsigned long long** authors;
 unsigned long long** channels;
 char*** messagestore;
@@ -137,6 +138,14 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                   discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");
                   sleep(1);
                   discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Sent too many links");
+
+                  int j;
+                  for(j=0;j<25;j++){
+                    if(authors[guildindex][j] == msg->author->id){
+                       messagestore[guildindex][j][0] = '\0';
+                    }
+                  }
+
               } 
           }
       }

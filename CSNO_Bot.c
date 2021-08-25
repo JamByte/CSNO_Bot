@@ -98,7 +98,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     //sendembed(client, bot,msg,"I see you sending a link");
     authors[guildindex][index[guildindex]] = msg->author->id;
     channels[guildindex][index[guildindex]] = msg->channel_id;
-    strlcpy(messagestore[guildindex][index[guildindex]],msg->content,150);
+    strncpy(messagestore[guildindex][index[guildindex]],msg->content,150);
     index[guildindex]++;
     if(index[guildindex] >24){
         index[guildindex] =0;

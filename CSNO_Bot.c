@@ -9,9 +9,9 @@
 #include <unistd.h>
 unsigned long long** authors;
 unsigned long long** channels;
+char*** messagestore;
 unsigned long long* servers;
 int serverslength;
-
 NTL_T(struct discord_guild) guilds;
 
 int* index;
@@ -32,11 +32,23 @@ void on_ready(struct discord *client, const struct discord_user *bot) {
 	  fflush( stdout );
 	authors = calloc(i,sizeof(unsigned long long*));
 	channels = calloc(i,sizeof(unsigned long long*));
+  
+	messagestore = calloc(i,sizeof(char***));
+
 	servers = calloc(i,sizeof(unsigned long long));
 	index =calloc(i,sizeof(int));
 	serverslength=i;
 	int j =0;
 	for(j=0;j<i;j++){
+
+    
+		authors[j] = calloc(25,sizeof(char*));
+    int k =0;
+    for(k=0;k<25;k++)
+    { 
+		  messagestore[j][K] = calloc(150,sizeof(char*));
+    }
+
 		servers[j] = guilds[j]->id;
 		authors[j] = calloc(25,sizeof(unsigned long long));
 		
@@ -60,10 +72,14 @@ void sendembed(struct discord *client, const struct discord_user *bot, const str
 
   discord_embed_cleanup(&embed);
 }
+
+
+
 void on_message(struct discord *client, const struct discord_user *bot, const struct discord_message *msg) {
    
-    if(msg->content == 0) {return;}
-    if(msg->content[0] == '\0') {return;}
+    int dontcomparebutstore=0;
+    if(msg->content == 0) {dontcomparebutstore=1;}
+    if(msg->content[0] == '\0') {dontcomparebutstore=1;}
 	
 	int guildindex =0;
 	
@@ -71,14 +87,18 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 		if(servers[guildindex] == msg->guild_id){
 		break;}
 	}
-	if(guildindex >= serverslength ){return;}
+	if(guildindex >= serverslength ){dontcomparebutstore=1;}
 	for(int i = 0; msg->content[i]; i++){
 	  msg->content[i] = tolower(msg->content[i]);
 	}
-    if(strstr(msg->content,"https://") == 0 && strstr(msg->content,"http://") == 0 && strstr(msg->content,"nitro") == 0){return;}
+    if(strstr(msg->content,"https://") == 0 && strstr(msg->content,"http://") == 0 && strstr(msg->content,"nitro") == 0){dontcomparebutstore=1;}
+
+
+
     //sendembed(client, bot,msg,"I see you sending a link");
     authors[guildindex][index[guildindex]] = msg->author->id;
     channels[guildindex][index[guildindex]] = msg->channel_id;
+    strlcpy(messagestore[guildindex][index[guildindex]],msg->content,150);
     index[guildindex]++;
     if(index[guildindex] >24){
         index[guildindex] =0;
@@ -86,47 +106,48 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     int i=0;
     unsigned long long channel1=0;
     unsigned long long channel2=0;
-    for(i=0; i<25; i++){
-        if(authors[guildindex][i] == msg->author->id){
-            if(channel1 == 0 || channel1 == channels[guildindex][i] ){
-                channel1 = channels[guildindex][i];
-                continue;
-            }
-            else if(channel2 == 0|| channel2== channels[guildindex][i]){
-                channel2 = channels[guildindex][i];
-                continue;
-            }
-            else
-            {
-                //send dm
-                u64_snowflake_t dm_channel_id;
-                struct discord_channel dm_channel;
-                discord_channel_init(&dm_channel);
-                char* buffer = malloc(512);
-                discord_create_dm(client, msg->author->id, &dm_channel);
-                dm_channel_id = dm_channel.id;
-                discord_channel_cleanup(&dm_channel);
-                sprintf(buffer, "You were softbanned in %s because your account was used to perpetuate a scam. If you did not do this, then your account has been compromised. It is advised that you change your Discord password and enable two-factor authentication on your account, and make sure to avoid suspicious links such as those that claim to offer free Nitro or CS:GO skins.\nYou can still rejoin the server, but please refrain from doing so until you have taken these measures", guilds[guildindex]->name);
-                struct discord_create_message_params params = { .content = buffer };
-                discord_create_message(client, dm_channel_id, &params, NULL);
-                printf("7");
-	              fflush( stdout );
-                free(buffer);
+    if(dontcomparebutstore==0){
+      for(i=0; i<25; i++){
+          if(authors[guildindex][i] == msg->author->id){
+              if(channel1 == 0 ||(channel1 == channels[guildindex][i] && strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i]])==0 ){
+                  channel1 = channels[guildindex][i];
+                  continue;
+              }
+              else if(channel2 == 0||( channel2== channels[guildindex][i] && strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i]])==0){
+                  channel2 = channels[guildindex][i];
+                  continue;
+              }
+              else
+              {
+                  //send dm
+                  u64_snowflake_t dm_channel_id;
+                  struct discord_channel dm_channel;
+                  discord_channel_init(&dm_channel);
+                  char* buffer = malloc(512);
+                  discord_create_dm(client, msg->author->id, &dm_channel);
+                  dm_channel_id = dm_channel.id;
+                  discord_channel_cleanup(&dm_channel);
+                  sprintf(buffer, "You were softbanned in %s because your account was used to perpetuate a scam. If you did not do this, then your account has been compromised. It is advised that you change your Discord password and enable two-factor authentication on your account, and make sure to avoid suspicious links such as those that claim to offer free Nitro or CS:GO skins.\nYou can still rejoin the server, but please refrain from doing so until you have taken these measures", guilds[guildindex]->name);
+                  struct discord_create_message_params params = { .content = buffer };
+                  discord_create_message(client, dm_channel_id, &params, NULL);
+                  free(buffer);
 
-				
-                //ban them !!!
-                discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");
-                sleep(1);
-                discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Sent too many links");
-            } 
-        }
+          
+                  //ban them !!!
+                  discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");
+                  sleep(1);
+                  discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Sent too many links");
+              } 
+          }
+      }
     }
 
 }
+void addnullvalue(int index){
+	
+}
 int main(int argc, char *argv[])
 {
-
-
     index=0;
   time_t t;
   srand((unsigned) time(&t));

@@ -42,7 +42,7 @@ void on_ready(struct discord *client, const struct discord_user *bot) {
 	for(j=0;j<i;j++){
 
     
-		authors[j] = calloc(25,sizeof(char*));
+		messagestore[j] = calloc(25,sizeof(char**));
     int k =0;
     for(k=0;k<25;k++)
     { 

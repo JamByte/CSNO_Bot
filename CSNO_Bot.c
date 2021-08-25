@@ -100,7 +100,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     authors[guildindex][index[guildindex]] = msg->author->id;
     channels[guildindex][index[guildindex]] = msg->channel_id;
     strncpy(messagestore[guildindex][index[guildindex]],msg->content,150);
-    index[guildindex]++;
+  
   
     int i=0;
     unsigned long long channel1=0;
@@ -151,6 +151,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
           }
       }
     }
+      index[guildindex]++;
     if(index[guildindex] >24){
         index[guildindex] =0;
     }

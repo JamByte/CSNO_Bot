@@ -87,7 +87,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
 		if(servers[guildindex] == msg->guild_id){
 		break;}
 	}
-	if(guildindex >= serverslength ){dontcomparebutstore=1;}
+	if(guildindex >= serverslength ){return;}
 	for(int i = 0; msg->content[i]; i++){
 	  msg->content[i] = tolower(msg->content[i]);
 	}

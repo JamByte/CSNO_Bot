@@ -113,10 +113,12 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
           if(authors[guildindex][i] == msg->author->id){
               if(channel1 == 0 ||(channel1 == channels[guildindex][i] && strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0 )){
                   channel1 = channels[guildindex][i];
+                  sendembed("1");
                   continue;
               }
               else if(channel2 == 0||( channel2== channels[guildindex][i] && strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)){
                   channel2 = channels[guildindex][i];
+                  sendembed("2");
                   continue;
               }
               else if(channel2!=0&&strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)

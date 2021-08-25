@@ -123,7 +123,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                   //sendembed(client, bot, msg,"2");
                   continue;
               }
-              else if(strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0))
+              else if(strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)
               {
                   //send dm
                   u64_snowflake_t dm_channel_id;

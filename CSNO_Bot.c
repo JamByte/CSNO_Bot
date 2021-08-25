@@ -105,9 +105,10 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     int i=0;
     unsigned long long channel1=0;
     unsigned long long channel2=0;
+    unsigned long long channel3=0;
     if(dontcomparebutstore==0){
       for(i=0; i<25; i++){
-        if(messagestore[guildindex][index[guildindex]][0] == '\0')
+        if(messagestore[guildindex][i]][0] == '\0')
         {
           continue;
         }
@@ -122,7 +123,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                   //sendembed(client, bot, msg,"2");
                   continue;
               }
-              else if(channel2!=0&&strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)
+              else if(strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0))
               {
                   //send dm
                   u64_snowflake_t dm_channel_id;
@@ -137,11 +138,11 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                   discord_create_message(client, dm_channel_id, &params, NULL);
                   free(buffer);
 
-          
+                  sendembed(client, bot, msg,"pow you would of been banned");
                   //ban them !!!
-                  discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");
-                  sleep(1);
-                  discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Sent too many links");
+                  //discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");
+                  //sleep(1);
+                  //discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Sent too many links");
 
                   int j;
                   for(j=0;j<25;j++){

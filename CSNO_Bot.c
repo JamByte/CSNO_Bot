@@ -108,7 +108,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     unsigned long long channel3=0;
     if(dontcomparebutstore==0){
       for(i=0; i<25; i++){
-        if(messagestore[guildindex][i]][0] == '\0')
+        if(messagestore[guildindex][i][0] == '\0')
         {
           continue;
         }

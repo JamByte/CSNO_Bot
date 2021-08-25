@@ -46,7 +46,7 @@ void on_ready(struct discord *client, const struct discord_user *bot) {
     int k =0;
     for(k=0;k<25;k++)
     { 
-		  messagestore[j][K] = calloc(150,sizeof(char*));
+		  messagestore[j][k] = calloc(150,sizeof(char*));
     }
 
 		servers[j] = guilds[j]->id;

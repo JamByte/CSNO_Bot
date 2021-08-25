@@ -115,20 +115,12 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
               if((channel1 == 0 ||(channel1 == channels[guildindex][i])) &&( strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0) ){
                   channel1 = channels[guildindex][i];
                   
-                  sendembed(client, bot, msg,"1");
-                  
-                  sendembed(client, bot, msg,messagestore[guildindex][index[guildindex]]);
-                  
-                  sendembed(client, bot, msg, messagestore[guildindex][i]);
+               
                   continue;
               }
               else if((channel2 == 0||( channel2== channels[guildindex][i])) && (strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)){
                   channel2 = channels[guildindex][i];
-                  sendembed(client, bot, msg,"2");
-
-                  sendembed(client, bot, msg,messagestore[guildindex][index[guildindex]]);
-                  
-                  sendembed(client, bot, msg, messagestore[guildindex][i]);
+            
                   continue;
               }
               else if(strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)
@@ -146,11 +138,11 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                   discord_create_message(client, dm_channel_id, &params, NULL);
                   free(buffer);
 
-                  sendembed(client, bot, msg,"pow you would of been banned");
+                  //sendembed(client, bot, msg,"pow you would of been banned");
                   //ban them !!!
-                  //discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");
-                  //sleep(1);
-                  //discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Sent too many links");
+                  discord_create_guild_ban(client, msg->guild_id, msg->author->id, 1, "Sent too many links");
+                  sleep(1);
+                  discord_remove_guild_ban(client, msg->guild_id, msg->author->id, "Sent too many links");
 
                   int j;
                   for(j=0;j<25;j++){

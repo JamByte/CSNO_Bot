@@ -109,6 +109,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
     unsigned long long channel2=0;
     if(dontcomparebutstore==0){
       for(i=0; i<25; i++){
+       
           if(authors[guildindex][i] == msg->author->id){
               if(channel1 == 0 ||(channel1 == channels[guildindex][i] && strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0 )){
                   channel1 = channels[guildindex][i];
@@ -118,7 +119,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                   channel2 = channels[guildindex][i];
                   continue;
               }
-              else
+              else if(channel2!=0&&strcmp(messagestore[guildindex][index[guildindex]], messagestore[guildindex][i])==0)
               {
                   //send dm
                   u64_snowflake_t dm_channel_id;
@@ -146,7 +147,7 @@ void on_message(struct discord *client, const struct discord_user *bot, const st
                     }
                   }
 
-              } 
+              }
           }
       }
     }
